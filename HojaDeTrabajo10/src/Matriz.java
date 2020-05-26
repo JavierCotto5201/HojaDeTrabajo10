@@ -3,18 +3,20 @@
  *@author: Javier Alejandro Cotto Argueta
  *@Carne: 19324
  *@from: https://devs4j.com/2017/11/24/implementa-un-grafo-de-ciudades-en-java/
+ *@From: https://www.geeksforgeeks.org/floyd-warshall-algorithm-dp-16/
  */
 
 import java.util.ArrayList;
 
 public class Matriz{
-	
+	//Variables
 	ArrayList<Vertex> rows = new ArrayList<Vertex>();
 	ArrayList<Vertex> columns = new ArrayList<Vertex>();
 	ArrayList<Integer> excentric = new ArrayList<Integer>();
 	Vertex center;
 	int min;
 	
+	//Constructor
 	public void addNode(Vertex node){
 		rows.add(node);
 		columns.add(node);
@@ -66,7 +68,7 @@ public class Matriz{
 			}
 		}
 	}
-	
+	//Centro del grafo
 	public Vertex getCenter(){
 		this.collectExcentrity();
 		return center;

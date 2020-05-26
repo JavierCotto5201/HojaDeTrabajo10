@@ -10,11 +10,13 @@ public class Edge{
 	private int distancia;
 	private Vertex destino;
 	
+	//Constructor
 	public Edge(Vertex destiny, int kilometers){
 		distancia = kilometers;
 		destino = destiny;
 	}
 	
+	//Obtener distancia y destino
 	public int getDistance(){
 		return distancia;
 	}
