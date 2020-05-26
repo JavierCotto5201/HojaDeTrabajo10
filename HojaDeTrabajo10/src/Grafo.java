@@ -11,16 +11,15 @@ public class Grafo{
 	
 	String name;
 	ArrayList<Vertex> nodo = new ArrayList<Vertex>();
-	
+	//Constructor
 	public Grafo(String nombre) {
-		// TODO Auto-generated constructor stub
 		name=nombre;
 	}
-
+	//Añadir nodo
 	public void addNode(Vertex point){
 		nodo.add(point);
 	}
-	
+	//Obtener nodo 
 	public Vertex getNode(String point){
 		Vertex result = null;
 		for(int i = 0; i<nodo.size(); i++){
@@ -30,7 +29,7 @@ public class Grafo{
 		}
 		return result;
 	}
-	
+	//Elimianr nodo
 	public boolean deleteNode(String point){
 		boolean completed = false;
 		for(int i = 0; i<nodo.size(); i++){
@@ -41,7 +40,7 @@ public class Grafo{
 		}
 		return completed;
 	}
-	
+	//Setters y Getters
 	public String getName(){
 		return name;
 	}

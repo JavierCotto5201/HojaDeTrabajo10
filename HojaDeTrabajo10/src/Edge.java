@@ -6,7 +6,7 @@
  */
 
 public class Edge{
-	
+	//Variables
 	private int distancia;
 	private Vertex destino;
 	

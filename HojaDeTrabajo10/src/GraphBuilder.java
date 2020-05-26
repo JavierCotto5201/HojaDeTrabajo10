@@ -10,7 +10,7 @@ import java.util.*;
 import java.io.*;
 
 public class GraphBuilder{
-	
+	//Inicialización de variables
 	Grafo graph = new Grafo("GRAFO");
 	Matriz matt = new Matriz();
 	ArrayList<Vertex> list;
@@ -18,36 +18,40 @@ public class GraphBuilder{
 	boolean active;
 	Scanner screen = new Scanner(System.in);
 	
+	//Metodo para comenzar el programa
 	public void Comenzar(){
 		active = true;
 		this.readFile();
 		list = graph.getList();
 		
+		//En caso de que se este corriendo, muestra el menu de opciones
 		while(active){
 			System.out.println("\nMenu de opciones \n1. Mostrar grafo \n2. Agregar ruta \n3. Buscar ruta \n4. Salir \n");
-			int input = screen.nextInt();
+			int op = screen.nextInt();
 			
-			if(input == 1){
+			//Dependiendo la opcion se dirige a realizar una acción
+			if(op == 1){
 				this.mostrarGrafo();
 			}
-			else if(input == 2){
+			else if(op == 2){
 				this.Informacion();
 			}
-			else if(input == 3){
+			else if(op == 3){
 				this.Buscar();
 			}
-			else if(input == 4){
-				System.out.println("Gracias por usar el programa... \n");
+			else if(op == 4){
+				System.out.println("Vuelva Pronto\n");
 				active = false;
 			}
 			else{
-				System.out.println("\nPorfavor ingrese una opcion valida \n");
+				//En caso s eingrese un valor que no este dentro de las opciones, muestra error
+				System.out.println("\nEsta opción no es valida, ingrese una nueva \n");
 			}
 			
 			list = graph.getList(); //Se actualiza la lista de rutas
 		}
 	}
-	
+	//Metodo para la lectura del archivo de texto
 	private void readFile(){
 		File file = new File("./src/guategrafo.txt");
 		int lineCounter = 0;
@@ -78,25 +82,29 @@ public class GraphBuilder{
 			}
 		}
 		catch(Exception e){
+			//Error en caso de que el archivo de texto tenga algun error de sintaxis "CIUDAD1 CIUDAD2 DISTANCI"
 			System.out.println("\n*** Hay un error de sintaxis en el archivo en la linea " + lineCounter + " *** \n");
 		}
 	}
-	
+	//Metodo para mostrar grafo
 	private void mostrarGrafo(){
+		//Encabezado
 		System.out.println("\n-----------------------------------------------------------------------");
 		for(int i = 0; i<list.size(); i++){
-			
+			//Agrega en la colección la lista
 			collection = list.get(i).getCollection();
-			
+			//Mostrar origne, destino, distancia de cada ruta
 			for(int a = 0; a<collection.size(); a++){
-				System.out.println("Origen: " + list.get(i).getName() + " --> Destino: " + collection.get(a).getDestination().getName() +
-				" --> La distancia mas corta es: " + matt.getShortestDistance(list.get(i)) + " KM. ");
+				//mensaje para mostrar el grafo
+				System.out.println("Origen: " + list.get(i).getName() + " Destino: " + collection.get(a).getDestination().getName() +
+				" --> La distancia es de: " + matt.getShortestDistance(list.get(i)) + " km ");
 			}
 		}
+		//Cierre de encabezado
 		System.out.println("----------------------------------------------------------------------- \n");
 		
 	}
-	
+	//Metodo para recabar añadir una ruta nueva
 	public void Informacion(){
 		boolean done = false;
 		while(!done){
@@ -129,14 +137,16 @@ public class GraphBuilder{
 				done = true;
 			}
 			catch(Exception e){
-				System.out.println("Error: porfavor ingrese la informacion correctamente...");
+				//Error
+				System.out.println("Error: Ingrese correctamente las ciudades y distancia entre ellas");
 				done = true;
 			}
 		}
 	}
-	
+	//Metodo para la busca de una ruta existente
 	public void Buscar(){
 		boolean done = false;
+		//Se llenan los datos para encontrar la ruta
 		while(!done){
 			System.out.println("\nIngrese el nombre del origen");
 			String origin = screen.next();
@@ -145,38 +155,41 @@ public class GraphBuilder{
 			System.out.println("\nIngrese el nombre del destino");
 			String destiny = screen.next();
 			screen.nextLine();
-			
-			String response = "";
+			//Variables
+			String respuesta = "";
 			
 			Vertex temporal = null;
 			boolean existence = false;
 			
 			for(int i = 0;i<list.size();i++){
-				
+				//Comparación del origen ingresado con el que este en el archivo de texto
 				if(list.get(i).getName().equalsIgnoreCase(origin)){
-					response += "\nEl origen \"" + origin + "\" ";
+					respuesta += "\nEl origen \"" + origin + "\" ";
 					collection = list.get(i).getCollection();
 					boolean exists = false;
 					existence = true;
 					
 					for(int a =0; a<collection.size(); a++){
+						//Comparación del destino ingresado y con el que esta en el archivo de texto
 						if(collection.get(a).getDestination().getName().equalsIgnoreCase(destiny)){
-							response += "va hacia el destino \"" + destiny + "\" a una distancia de " + collection.get(a).getDistance() + "KM \n";
+							respuesta += "va hacia el destino \"" + destiny + "\" a una distancia de " + collection.get(a).getDistance() + "KM \n";
 							exists = true;
 						}
 					}
 					
 					if(!exists){
-						response += "no tiene un ruta existente hacia \"" + destiny + "\" \n";
+						//En caso no exista el destino, muestra este mensaje
+						respuesta += "no tiene un ruta existente hacia \"" + destiny + "\" \n";
 					}
 				}
 				
 				if(i == (list.size()-1) && !existence){
-					response += "\nEl origen \"" + origin + "\" no existe \n";
+					//En caso no exista el origen, muestra el mensaje
+					respuesta += "\nEl origen \"" + origin + "\" no existe \n";
 				}
 			}
-			
-			System.out.println(response);
+			//Imprime la variable respuesta
+			System.out.println(respuesta);
 			done = true;
 		}
 	}
